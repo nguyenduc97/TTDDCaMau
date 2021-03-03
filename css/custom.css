@@ -87,7 +87,7 @@ html body {
 }
 
 .ddc__content .ddc__content_wrapper{
-	padding: 1.8rem;
+	/*padding: 1.8rem;*/
 }
 .ddc__content .ddc__content_wrapper .ddc_content_contaier{
 	/*border: 1px solid red;*/
@@ -101,7 +101,8 @@ html body {
 .ddc__content .ddc__content_wrapper .ddc_content_contaier .ddc_wrapper_body{
 	max-width: 100%;
 	min-width: 100%;
-	height: calc(100vh - 160px);
+	/*height: calc(100vh - 160px);*/
+	height: calc(100vh - 7rem);
 	/* height: calc(100vh - 500px); */
 	position: relative;	
 }
