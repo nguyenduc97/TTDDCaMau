@@ -30,4 +30,36 @@ $(function() {
 		}
 		click =!click;
 	});
+	$('#thuadat').on('click',function(){
+		if(click){
+			$('.ddc_thuadat').show();
+		}else{
+			$('.ddc_thuadat').hide();
+		}
+		click =!click;
+	});
+	$('#giadat').on('click',function(){
+		if(click){
+			$('.ddc_giadat').show();
+		}else{
+			$('.ddc_giadat').hide();
+		}
+		click =!click;
+	});
+	$('#quydat').on('click',function(){
+		if(click){
+			$('.ddc_quydat').show();
+		}else{
+			$('.ddc_quydat').hide();
+		}
+		click =!click;
+	});
+	$('#doluong').on('click',function(){
+		if(click){
+			$('.ddc_doluong').show();
+		}else{
+			$('.ddc_doluong').hide();
+		}
+		click =!click;
+	});
 });
