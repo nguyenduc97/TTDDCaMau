@@ -22,16 +22,16 @@ require([
             zoom: 13,
         });
     // tìm kiếm
-    var search = new Search({
-      view: view
-  });   
-    var exPandSearch = new Expand({
-        view: view,
-        autoCollapse: true,
-        content: search,
-        expanded: false,
-    });
-    view.ui.add(exPandSearch, "top-right");
+  //   var search = new Search({
+  //     view: view
+  // });   
+  //   var exPandSearch = new Expand({
+  //       view: view,
+  //       autoCollapse: true,
+  //       content: search,
+  //       expanded: false,
+  //   });
+  //   view.ui.add(exPandSearch, "top-right");
     // ScaleBar
     var scaleBar = new ScaleBar({
       view: view
@@ -41,10 +41,10 @@ require([
     });
 
     //home 
-    var home = new HomeButton({
-        map: map
-    }, "HomeButton");
-    view.ui.add(home, "top-right");
+    // var home = new HomeButton({
+    //     map: map
+    // }, "HomeButton");
+    // view.ui.add(home, "top-right");
     // Custom Locate
     $('.mylocation').on('click',function(){
         var locateBtn = new Locate({
