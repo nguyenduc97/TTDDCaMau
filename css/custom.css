@@ -130,7 +130,9 @@ html body {
 	border-top: 1px solid #E4E7ED;
 	padding: 0.4rem;
 }
-
+.ddc_info{
+	display: none;
+}
 .ddc_popup{
 	display: none;
 	position: fixed;
@@ -174,4 +176,11 @@ html body {
 .ddc_popup .ddc_popup_content .ddc_popup_footer .ddc_submit{
 	margin-right: 5px;
 }
+.ddc_baseMap{
+	display: none;
+}
+.ddc_layerList{
+	display: none;
+}
+
 

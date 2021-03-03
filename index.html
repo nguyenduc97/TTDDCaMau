@@ -45,7 +45,7 @@
           <i class="fa fa-bookmark"></i>
         </a>
       </li>
-      <li>
+      <li id="layerList">
         <a href="#">
           <i class="fa fa-object-ungroup"></i>
         </a>
@@ -65,26 +65,28 @@
           <i class="fa fa-filter"></i>
         </a>
       </li>
-      <li>
+      <!-- Của thước đo mà chưa có icon thích hợp -->
+      <!-- <li>
         <a href="#">
           <i class="fa fa-map"></i>
         </a>
-      </li>
-      <li>
+      </li> -->
+      <li id="baseMap">
         <a href="#">
           <i class="fa fa-map"></i>
         </a>
-      </li>
+      </li>      
       <li id="tintuc" title="tin tức">
         <a href="#">
           <i class="fa fa-map"></i>
         </a>
       </li>       
     </div>
-    <div class="ddc_popup">
+    <!-- demo Popup -->
+    <div class="ddc_popup ddc_info">
       <div class="x ddc_close">X</div>
       <div class="ddc_popup_content">
-        <div class="ddc_popup_head">Head</div>
+        <div class="ddc_popup_head">Demo Popup</div>
         <div class="ddc_popup_body">
           <div class="form-group">
             <label>Name</label>
@@ -128,7 +130,33 @@
           <div class="btn btn-danger ddc_close">Hủy bỏ</div>
         </div>
       </div>
+    </div>
+    <!-- popup Basemap -->
+    <div class="ddc_popup ddc_baseMap">
+      <div class="x ddc_close">X</div>
+      <div class="ddc_popup_content">
+        <div class="ddc_popup_head">Chọn loại bản đồ</div>
+        <div class="ddc_popup_body" id="ddc_body_baseMap">
+        </div>
+        <div class="ddc_popup_footer">
+          <div></div>
+          <div class="btn btn-danger ddc_close">Hủy bỏ</div>
+        </div>
+      </div>
     </div> 
+    <!-- popup layerList -->
+    <div class="ddc_popup ddc_layerList">
+      <div class="x ddc_close">X</div>
+      <div class="ddc_popup_content">
+        <div class="ddc_popup_head">Lớp dữ liệu</div>
+        <div class="ddc_popup_body" id="ddc_layerList">
+        </div>
+        <div class="ddc_popup_footer">
+          <div></div>
+          <div class="btn btn-danger ddc_close">Hủy bỏ</div>
+        </div>
+      </div>
+    </div>
     <div class="ddc__content ddc__app_content">
       <div class="ddc__content_wrapper">
         <div class="row">

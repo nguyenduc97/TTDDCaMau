@@ -32,19 +32,6 @@ require([
         expanded: false,
     });
     view.ui.add(exPandSearch, "top-right");
-
-    // Bản đồ
-    var BasemapGallerys = new BasemapGallery({
-      view: view
-  });
-    var exPandGallery = new Expand({
-        view: view,
-        autoCollapse: true,
-        content: BasemapGallerys,
-        expanded: false,
-    });
-    view.ui.add(exPandGallery, "top-right");
-
     // ScaleBar
     var scaleBar = new ScaleBar({
       view: view
@@ -60,23 +47,18 @@ require([
     view.ui.add(home, "top-right");
     // Custom Locate
     $('.mylocation').on('click',function(){
-            var locateBtn = new Locate({
-                view: view
-            });
-            locateBtn.locate();
-        })
-    // SetupMap();
-    // function SetupMap() {
-    //     $('.mylocation').on('click',function(){
-    //         var locateBtn = new Locate({
-    //             view: view
-    //         });
-    //         locateBtn.locate();
-    //     })
-    // };
+        var locateBtn = new Locate({
+            view: view
+        });
+        locateBtn.locate();
+    })
 
-
-
+    //Custom Bản đồ
+    var BasemapGallerys = new BasemapGallery({
+        view: view
+    },"ddc_body_baseMap");
+    // Custom LayerList
+    var layerList = new LayerList({
+        view
+    },"ddc_layerList");
 });
-
-
