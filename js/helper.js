@@ -19,8 +19,8 @@ require([
         url: "http://103.77.167.158:6080/arcgis/rest/services/DTTM/ThuaDat/MapServer"
     });
        var map = new Map({
-        // basemap: "gray-vector"
-        layers: [basemapBDN] // bản đồ nền
+        basemap: "gray-vector"
+        // layers: [basemapBDN] // bản đồ nền
     });
        var view = new MapView({
         container: "viewDiv",
