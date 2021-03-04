@@ -1,4 +1,5 @@
 $(function() {
+	$('[rel=popover]').popover();
 	var click = true;
 	$('#tintuc').on('click',function(){
 		if(click){
