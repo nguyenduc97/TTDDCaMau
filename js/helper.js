@@ -6,7 +6,8 @@ require([
     "esri/widgets/Expand",
     "esri/widgets/ScaleBar",
     "esri/widgets/Home",
-    "esri/widgets/Locate",    
+    "esri/widgets/Locate",   
+    "esri/request", 
     "dojo/query",
     "dojo/on",
     "dojo/dom",
@@ -14,13 +15,10 @@ require([
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer",
     "esri/layers/FeatureLayer",
-    ],function(Map,MapView,Search,BasemapGallery,Expand,ScaleBar,HomeButton,Locate,query,dom,on,LayerList,MapImageLayer,GraphicsLayer,FeatureLayer){
-       var basemapBDN = new MapImageLayer({
-        url: "http://103.77.167.158:6080/arcgis/rest/services/DTTM/ThuaDat/MapServer"
-    });
+    "dojo/_base/array",
+    ],function(Map,MapView,Search,BasemapGallery,Expand,ScaleBar,HomeButton,Locate,esriRequest,query,dom,on,LayerList,MapImageLayer,GraphicsLayer,FeatureLayer,array){
        var map = new Map({
-        basemap: "gray-vector"
-        // layers: [basemapBDN] // bản đồ nền
+        basemap: "gray-vector",
     });
        var view = new MapView({
         container: "viewDiv",
@@ -28,6 +26,8 @@ require([
         center: [107.57, 16.475],
         zoom: 13,
     });
+       addCheckLayer("http://103.77.167.158:6080/arcgis/rest/services/DTTM/ThuaDat/FeatureServer");
+       //map.addLayers(basemapBDN);
     // tìm kiếm
   //   var search = new Search({
   //     view: view
@@ -44,7 +44,7 @@ require([
       view: view
   });
     view.ui.add(scaleBar, {
-    	position: "bottom-left"
+        position: "bottom-left"
     });
 
     //home 
@@ -59,7 +59,25 @@ require([
         });
         locateBtn.locate();
     })
+    
 
+    function addCheckLayer(urlLayer) {
+            var checkLink = urlLayer.trim() + "/layers";
+            var options = { query: { f: 'json' }, responseType: 'json' };
+            esriRequest(checkLink, options).then(function (response) {
+                var res = response.data;
+                var reverse = res.layers.length;
+                for (var i = reverse - 1; i < reverse; i--) {
+                    var layer = res.layers[i];
+                    var temps = new FeatureLayer({
+                        url: urlLayer + "/" + layer.id.toString(),
+                        outFields: ["*"],
+                        visible: true
+                    });
+                    map.layers.add(temps);
+                }
+            });
+        }
     //Custom Bản đồ
     var BasemapGallerys = new BasemapGallery({
         view: view
@@ -70,10 +88,10 @@ require([
     },"ddc_layerList");
     // view info click
      view.on("click", function(event) {
-        view.hitTest(event).then(function (response) {
-            console.log(response);
-        });
-        // view.hitTest(event).then(viewInfoPopup);
+        // view.hitTest(event).then(function (response) {
+        //     // console.log(response);
+        // });
+        view.hitTest(event).then(viewInfoPopup);
     });
      function viewInfoPopup(response) {
         var titleField = response.results[0].graphic.layer;

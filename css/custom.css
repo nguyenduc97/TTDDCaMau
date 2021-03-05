@@ -199,5 +199,11 @@ html body {
 	width: 20px;
 	/*fill: #007bff*/
 }
-
+.ddc_grid_head {
+	display: grid;
+	grid-template-columns: 90% 10%;
+}
+.x img{
+	width: 40px;
+}
 
