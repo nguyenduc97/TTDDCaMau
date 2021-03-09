@@ -16,17 +16,25 @@ require([
     "esri/layers/GraphicsLayer",
     "esri/layers/FeatureLayer",
     "dojo/_base/array",
-    ],function(Map,MapView,Search,BasemapGallery,Expand,ScaleBar,HomeButton,Locate,esriRequest,query,dom,on,LayerList,MapImageLayer,GraphicsLayer,FeatureLayer,array){
-       var map = new Map({
-        basemap: "gray-vector",
-    });
-       var view = new MapView({
+    "esri/Basemap",
+    "esri/tasks/support/Query",
+    ],function(Map,MapView,Search,BasemapGallery,Expand,ScaleBar,HomeButton,Locate,esriRequest,query,dom,on,LayerList,MapImageLayer,GraphicsLayer,FeatureLayer,array,Basemap,Query){
+        var pushbasemaps = [];
+        var urlMap = "https://gisportal.svtech.com.vn/portal/rest/services/DDC/Basemap_DTTM/MapServer";
+        var options = { query: { f: 'json' }, responseType: 'json' };
+        var idQueryPhuongXa ="/0"
+        var map = new Map({
+        });
+
+     // Bản Đồ Nền     
+
+     var view = new MapView({
         container: "viewDiv",
         map: map,
         center: [107.57, 16.475],
         zoom: 13,
     });
-       addCheckLayer("http://103.77.167.158:6080/arcgis/rest/services/DTTM/ThuaDat/FeatureServer");
+     addESRIBaseMap();
        //map.addLayers(basemapBDN);
     // tìm kiếm
   //   var search = new Search({
@@ -60,40 +68,34 @@ require([
         locateBtn.locate();
     })
     
-
+    addCheckLayer("https://gisportal.svtech.com.vn/portal/rest/services/DDC/DTTM/FeatureServer");
     function addCheckLayer(urlLayer) {
-            var checkLink = urlLayer.trim() + "/layers";
-            var options = { query: { f: 'json' }, responseType: 'json' };
-            esriRequest(checkLink, options).then(function (response) {
-                var res = response.data;
-                var reverse = res.layers.length;
-                for (var i = reverse - 1; i < reverse; i--) {
-                    var layer = res.layers[i];
-                    var temps = new FeatureLayer({
-                        url: urlLayer + "/" + layer.id.toString(),
-                        outFields: ["*"],
-                        visible: true
-                    });
-                    map.layers.add(temps);
-                }
-            });
-        }
-    //Custom Bản đồ
-    var BasemapGallerys = new BasemapGallery({
-        view: view
-    },"ddc_body_baseMap");
+        var checkLink = urlLayer.trim() + "/layers";
+        var options = { query: { f: 'json' }, responseType: 'json' };
+        esriRequest(checkLink, options).then(function (response) {
+            var res = response.data;
+            var reverse = res.layers.length;
+            for (var i = reverse - 1; i < reverse; i--) {
+                var layer = res.layers[i];
+                var temps = new FeatureLayer({
+                    url: urlLayer + "/" + layer.id.toString(),
+                    outFields: ["*"],
+                    visible: true
+                });
+                map.layers.add(temps);
+            }
+        });
+    }
+    
     // Custom LayerList
     var layerList = new LayerList({
-        view
+        view: view
     },"ddc_layerList");
     // view info click
-     view.on("click", function(event) {
-        // view.hitTest(event).then(function (response) {
-        //     // console.log(response);
-        // });
+    view.on("click", function(event) {
         view.hitTest(event).then(viewInfoPopup);
     });
-     function viewInfoPopup(response) {
+    function viewInfoPopup(response) {
         var titleField = response.results[0].graphic.layer;
         var checkFieldInfo = response.results[0].graphic.geometry;
         if (checkFieldInfo !== null) {
@@ -124,4 +126,55 @@ require([
             graphics.layer.popupTemplate = template;
         }
     };
+    function addESRIBaseMap() {
+        var layer = null;        
+        if (urlMap) {
+            layer = new MapImageLayer({
+                url: urlMap
+            });
+            var customBasemap = new Basemap({
+                baseLayers: [layer],
+                title: "Bản đồ nền mặc định",
+                id: "ddc_body_baseMap"
+            });
+            pushbasemaps.push(customBasemap);
+        }
+
+        // nền
+        //End ESRI Tile online
+        var basemapGallery = new BasemapGallery({
+            source: pushbasemaps,
+            view: view
+        }, "ddc_body_baseMap");
+        if (customBasemap) {
+            basemapGallery.activeBasemap = customBasemap;
+        }
+    }
+    //queryLayer();
+    //function queryLayer(){
+        // var featureLayer = new FeatureLayer({
+        //     url:"https://gisportal.svtech.com.vn/portal/rest/services/DDC/Basemap_DTTM/MapServer/0",
+        //     outFields: ["*"]
+        // });
+        // featureLayer.queryFeatures(query)
+        // .then(function(response) {
+        //     console.log(response);
+        // });
+    //}
+    // esriRequest(urlMap + '/0', options).then(function(response) {
+    //     console.log(response);
+    // });
+    var listTenQuanHuyen=[];
+    var query = new Query({
+        where:"1=1",
+        outFields:["*"],
+    });
+    var featureLayerPX = new FeatureLayer({
+        url: urlMap + idQueryPhuongXa,
+        outFields: ["*"]
+    });
+    featureLayerPX.queryFeatures(query)
+    .then(function(response) {
+        console.log(response);
+    });
 });
